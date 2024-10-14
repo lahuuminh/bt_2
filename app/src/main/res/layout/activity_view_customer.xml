@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- ListView để hiển thị danh sách -->
+
+    <!-- Layout chứa ba nút ở cuối -->
+
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <!-- Button: Input -->
+        <Button
+            android:id="@+id/buttonInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Input"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_200"
+            android:textColor="@android:color/white" />
+
+        <!-- Button: Use -->
+        <Button
+            android:id="@+id/buttonUse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Use"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_200"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Button: List -->
+        <Button
+            android:id="@+id/buttonList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="List"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_200"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</LinearLayout>

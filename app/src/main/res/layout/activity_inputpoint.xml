@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- Label: Input Point -->
+    <TextView
+        android:id="@+id/labelInputPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Input Point"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="8dp" />
+
+    <!-- Label: Customer's Phone -->
+    <TextView
+        android:id="@+id/labelCustomerPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Customer's Phone"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/labelInputPoint"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Input: Customer's Phone -->
+    <EditText
+        android:id="@+id/inputCustomerPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter customer's phone"
+        android:inputType="phone"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/labelCustomerPhone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <!-- Label: Current Point -->
+    <TextView
+        android:id="@+id/labelCurrentPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Point"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/inputCustomerPhone"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Input: Current Point -->
+    <EditText
+        android:id="@+id/inputCurrentPoint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter current point"
+        android:inputType="number"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/labelCurrentPoint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <!-- Label: Input New Point -->
+    <TextView
+        android:id="@+id/labelInputNewPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Input New Point"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/inputCurrentPoint"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Input: Input New Point -->
+    <EditText
+        android:id="@+id/inputNewPoint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter new point"
+        android:inputType="number"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/labelInputNewPoint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <!-- Label: Note -->
+    <TextView
+        android:id="@+id/labelNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/inputNewPoint"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Input: Note -->
+    <EditText
+        android:id="@+id/inputNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter note"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/labelNote"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9" />
+
+    <!-- Button: Save -->
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/inputNote"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.45"
+        android:layout_marginTop="24dp" />
+
+    <!-- Button: Save & Next -->
+    <Button
+        android:id="@+id/buttonSaveNext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Save and Next"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/inputNote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonSave"
+        app:layout_constraintWidth_percent="0.45"
+        android:layout_marginTop="24dp" />
+
+    <!-- Buttons: Input, Use, List -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/buttonSaveNext"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp">
+
+        <!-- Button: Input -->
+        <Button
+            android:id="@+id/buttonInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Input"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_200"
+            android:textColor="@android:color/white" />
+
+        <!-- Button: Use -->
+        <Button
+            android:id="@+id/buttonUse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Use"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_200"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Button: List -->
+        <Button
+            android:id="@+id/buttonList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="List"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_200"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
