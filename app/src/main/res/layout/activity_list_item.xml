@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Ngày tạo 1"
-            android:textSize="16sp"
-            android:textColor="#333333" />
+            android:textColor="#333333"
+            android:textSize="16sp" />
 
         <!-- TextView: Ngày tạo 2 -->
         <TextView
@@ -40,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Ngày tạo 2"
-            android:textSize="16sp"
-            android:textColor="#333333" />
+            android:textColor="#333333"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <!-- TextView: Ghi chú -->
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ghi chú"
-        android:textSize="16sp"
-        android:textColor="#666666" />
+        android:textColor="#666666"
+        android:textSize="16sp" />
 
 </LinearLayout>

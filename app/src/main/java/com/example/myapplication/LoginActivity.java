@@ -1,51 +1,64 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-
 
 public class LoginActivity extends AppCompatActivity {
-
+    // Views
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
-    private ImageView logoImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Gán view cho các thành phần
-        usernameEditText = findViewById(R.id.usernameEditText);
-        passwordEditText = findViewById(R.id.passwordEditText);
-        loginButton = findViewById(R.id.loginButton);
-        logoImageView = findViewById(R.id.logoImageView);
+        initViews();
+    }
 
-        // Xử lý sự kiện khi nhấn nút Login
-        loginButton.setOnClickListener((View v)->{
+    private void initViews() {
+        this.usernameEditText = findViewById(R.id.usernameEditText);
+        this.passwordEditText = findViewById(R.id.passwordEditText);
+        this.loginButton = findViewById(R.id.loginButton);
 
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+        this.usernameEditText.setText("admin");
+        this.passwordEditText.setText("123");
 
-                if (username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Thực hiện logic đăng nhập ở đây
-                    Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                }
-            });
+        this.loginButton.setOnClickListener(view -> {
+            login();
+        });
+    }
 
+    private void login() {
+        String username = this.usernameEditText.getText().toString();
+        String password = this.passwordEditText.getText().toString();
+
+        // Validate input [1, 50] characters
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin Username & Password!", Toast.LENGTH_SHORT).show();
+
+            if (username.isEmpty()) {
+                this.usernameEditText.requestFocus();
+            } else {
+                this.passwordEditText.requestFocus();
+            }
+        } else if (username.length() > 50 || password.length() > 50) {
+            Toast.makeText(this, "Username & Password! không hợp lệ!", Toast.LENGTH_SHORT).show();
+        } else {
+            // Username: admin, Password: 123
+
+            if (username.equals("admin") && password.equals("123")) {
+                Intent loginIntent = new Intent(this, MainActivity.class);
+                startActivity(loginIntent);
+            } else {
+                Toast.makeText(this, "Username hoặc Password! không đúng, vui lòng nhập lại!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
