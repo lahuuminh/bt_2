@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 
 import android.os.Bundle;
@@ -7,22 +7,23 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.R;
 
 
-public class input extends AppCompatActivity {
+public class UsePointActivity extends AppCompatActivity {
 
-    private EditText inputCustomerPhone, inputCurrentPoint, inputNewPoint, inputNote;
+    private EditText inputCustomerPhone, inputCurrentPoint, inputUsePoint, inputNote;
     private Button buttonSave, buttonSaveNext, buttonInput, buttonUse, buttonList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inputpoint); // Thay thế 'activity_main' bằng tên file layout của bạn nếu khác
+        setContentView(R.layout.activity_input); // Thay thế 'activity_main' bằng tên file layout của bạn nếu khác
 
         // Khởi tạo các view
         inputCustomerPhone = findViewById(R.id.inputCustomerPhone);
         inputCurrentPoint = findViewById(R.id.inputCurrentPoint);
-        inputNewPoint = findViewById(R.id.inputNewPoint);
+        inputUsePoint = findViewById(R.id.inputNewPoint);
         inputNote = findViewById(R.id.inputNote);
 
         buttonSave = findViewById(R.id.buttonSave);
@@ -61,7 +62,7 @@ public class input extends AppCompatActivity {
     private void saveData() {
         String phone = inputCustomerPhone.getText().toString();
         String currentPoint = inputCurrentPoint.getText().toString();
-        String newPoint = inputNewPoint.getText().toString();
+        String newPoint = inputUsePoint.getText().toString();
         String note = inputNote.getText().toString();
 
     }
@@ -70,7 +71,7 @@ public class input extends AppCompatActivity {
     private void clearInputs() {
         inputCustomerPhone.setText("");
         inputCurrentPoint.setText("");
-        inputNewPoint.setText("");
+        inputUsePoint.setText("");
         inputNote.setText("");
     }
 }

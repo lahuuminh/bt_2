@@ -4,57 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent" >
 
     <!-- ListView để hiển thị danh sách -->
 
     <!-- Layout chứa ba nút ở cuối -->
 
 
-    <ListView
-        android:id="@+id/listView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+<!--    <LinearLayout-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center">-->
 
-        <!-- Button: Input -->
-        <Button
-            android:id="@+id/buttonInput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Input"
-            android:layout_weight="1"
-            android:backgroundTint="@color/teal_200"
-            android:textColor="@android:color/white" />
+<!--        &lt;!&ndash; Button: Input &ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/buttonInput"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Input"-->
+<!--            android:layout_weight="1"-->
+<!--            android:backgroundTint="@color/teal_200"-->
+<!--            android:textColor="@android:color/white" />-->
 
-        <!-- Button: Use -->
-        <Button
-            android:id="@+id/buttonUse"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Use"
-            android:layout_weight="1"
-            android:backgroundTint="@color/teal_200"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+<!--        &lt;!&ndash; Button: Use &ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/buttonUse"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Use"-->
+<!--            android:layout_weight="1"-->
+<!--            android:backgroundTint="@color/teal_200"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginEnd="8dp" />-->
 
-        <!-- Button: List -->
-        <Button
-            android:id="@+id/buttonList"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="List"
-            android:layout_weight="1"
-            android:backgroundTint="@color/teal_200"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+<!--        &lt;!&ndash; Button: List &ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/buttonList"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="List"-->
+<!--            android:layout_weight="1"-->
+<!--            android:backgroundTint="@color/teal_200"-->
+<!--            android:textColor="@android:color/white" />-->
+<!--    </LinearLayout>-->
 
 </LinearLayout>

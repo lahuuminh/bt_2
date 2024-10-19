@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.R;
 
 public class LoginActivity extends AppCompatActivity {
     // Views
@@ -54,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             // Username: admin, Password: 123
 
             if (username.equals("admin") && password.equals("123")) {
-                Intent loginIntent = new Intent(this, MainActivity.class);
+                Intent loginIntent = new Intent(this, InputActivity.class);
                 startActivity(loginIntent);
             } else {
                 Toast.makeText(this, "Username hoặc Password! không đúng, vui lòng nhập lại!", Toast.LENGTH_SHORT).show();

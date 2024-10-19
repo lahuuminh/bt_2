@@ -15,7 +15,7 @@
 
         <!-- Khai báo Login là Activity được khởi chạy đầu tiên -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,9 @@
         </activity>
 
         <!-- Khai báo các Activity có sử dụng trong hệ thống để Android quản lý -->
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.InputActivity" />
+        <activity android:name=".activity.ViewCustomerActivity" />
+        <activity android:name=".activity.UsePointActivity" />
 
     </application>
 
