@@ -43,6 +43,9 @@
         android:layout_marginTop="16dp" />
 
     <!-- Input: Current Point -->
+
+    <!-- Label: Input New Point -->
+
     <EditText
         android:id="@+id/inputCurrentPoint"
         android:layout_width="match_parent"
@@ -51,7 +54,6 @@
         android:inputType="number"
         android:padding="12dp" />
 
-    <!-- Label: Input New Point -->
     <TextView
         android:id="@+id/labelInputNewPoint"
         android:layout_width="wrap_content"
@@ -61,6 +63,9 @@
         android:layout_marginTop="16dp" />
 
     <!-- Input: Input New Point -->
+
+    <!-- Label: Note -->
+
     <EditText
         android:id="@+id/inputNewPoint"
         android:layout_width="match_parent"
@@ -69,7 +74,6 @@
         android:inputType="number"
         android:padding="12dp" />
 
-    <!-- Label: Note -->
     <TextView
         android:id="@+id/labelNote"
         android:layout_width="wrap_content"
@@ -153,5 +157,11 @@
             android:backgroundTint="@color/teal_200"
             android:textColor="@android:color/white" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_load_point"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button Load Point" />
 
 </LinearLayout>

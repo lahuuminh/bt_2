@@ -7,6 +7,9 @@
     android:padding="16dp" >
 
     <!-- Label: Input Point -->
+
+
+
     <TextView
         android:id="@+id/labelInputPoint"
         android:layout_width="wrap_content"
@@ -143,46 +146,59 @@
 
     <!-- Buttons: Input, Use, List -->
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/buttonSaveNext"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonSaveNext">
 
         <!-- Button: Input -->
         <Button
             android:id="@+id/buttonInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Input"
             android:layout_weight="1"
             android:backgroundTint="@color/teal_200"
+            android:text="Input"
             android:textColor="@android:color/white" />
 
         <!-- Button: Use -->
+
+        <!-- Button: List -->
         <Button
             android:id="@+id/buttonUse"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Use"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:backgroundTint="@color/teal_200"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+            android:text="Use"
+            android:textColor="@android:color/white" />
 
-        <!-- Button: List -->
         <Button
             android:id="@+id/buttonList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="List"
             android:layout_weight="1"
             android:backgroundTint="@color/teal_200"
+            android:text="List"
             android:textColor="@android:color/white" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_load_point_1"
+        android:layout_width="413dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="20dp"
+        android:text="Button Load Point"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

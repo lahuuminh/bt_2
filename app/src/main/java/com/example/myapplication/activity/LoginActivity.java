@@ -1,6 +1,7 @@
 package com.example.myapplication.activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,5 +63,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Username hoặc Password! không đúng, vui lòng nhập lại!", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.myapplication.model.CustomerModel;
 
@@ -28,7 +29,7 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_PHONE_NUMBER + " text primary key not null, " +
             COLUMN_POINT + " interger not null, " +
             COLUMN_NOTES + " text, " +
-            COLUMN_TIME_CREATED + " interger not null);";   //Dùng timeCreated để làm khóa chính
+            COLUMN_TIME_CREATED + " text);";   //Dùng timeCreated để làm khóa chính
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -74,10 +75,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 @SuppressLint("Range") int point = cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_POINT));
                 @SuppressLint("Range") long timeCreated = cursor.getLong(cursor.getColumnIndex(DBHelper.COLUMN_TIME_CREATED));
                 @SuppressLint("Range") String note = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NOTES));
-
                 CustomerModel customer = new CustomerModel(phoneNumber, point, note);
                 customer.setTimeCreated(timeCreated);
-
                 customers.add(customer);
             } while (cursor.moveToNext());
         }
@@ -86,4 +85,34 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return customers;
     }
+//    public boolean updatePoints(String phoneNumber, int newPoint) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(COLUMN_POINT, newPoint);
+//        int result = db.update(TABLE_NAME, contentValues, COLUMN_PHONE_NUMBER + " = ?", new String[]{phoneNumber});
+//        db.close();
+//        return result > 0;
+//    }
+//
+//    // Get points for a customer
+//    public int getCustomerPoints(String phoneNumber) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT " + COLUMN_POINT + " FROM " + TABLE_NAME + " WHERE " + COLUMN_PHONE_NUMBER + " = ?", new String[]{phoneNumber});
+//        int point = 0;
+//
+//        if (cursor.moveToFirst()) {
+//            try {
+//                // Sử dụng getColumnIndexOrThrow để kiểm tra lỗi
+//                point = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_POINT));
+//            } catch (IllegalArgumentException e) {
+//                // Xử lý khi cột không tồn tại (sẽ ném ngoại lệ nếu có lỗi)
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        cursor.close();
+//        db.close();
+//        return point;
+//    }
+
 }
