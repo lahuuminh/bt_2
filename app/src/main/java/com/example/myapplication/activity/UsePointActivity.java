@@ -56,68 +56,73 @@ public class UsePointActivity extends AppCompatActivity {
         // Xử lý sự kiện cho nút Save
         buttonSave.setOnClickListener((View) -> {
             String phone = inputCustomerPhone.getText().toString().trim();
-            int newPointStr =Integer.parseInt(inputUsePoint.getText().toString());
-            String note = inputNote.getText().toString().trim();
+
 
             if (!isValidPhoneNumber(phone)) {
                 Toast.makeText(UsePointActivity.this, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if (inputCurrentPoint.getText().toString().isEmpty()) {
+                Toast.makeText(UsePointActivity.this, "Vui lòng ấn nút load point", Toast.LENGTH_SHORT).show();
+                return;}
             // Kiểm tra điểm nhập vào không phải là số âm, 0, hoặc chứa ký tự không hợp lệ
-            if (!isValidPoint(newPointStr)) {
-                Toast.makeText(UsePointActivity.this, "Điểm phải là số dương và không chứa ký tự đặc biệt", Toast.LENGTH_SHORT).show();
+            if (!isValidPoint(inputUsePoint.getText().toString())) {
+                Toast.makeText(UsePointActivity.this, "Điểm phải là số dương và không chứa ký tự đặc biệt,không bỏ trống", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // Kiểm tra độ dài ghi chú không vượt quá 100 ký tự
-            if (!isValidNote(note)) {
-                Toast.makeText(UsePointActivity.this, "Ghi chú không được vượt quá 100 ký tự", Toast.LENGTH_SHORT).show();
+            if (!isValidNote(inputNote.getText().toString())) {
+                Toast.makeText(UsePointActivity.this, "Ghi chú không được vượt quá 100 ký tự,không bỏ trống", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            if (inputCurrentPoint.getText().toString().isEmpty()) {
-                Toast.makeText(UsePointActivity.this, "Vui lòng ấn nút load point", Toast.LENGTH_SHORT).show();}else{
             // Lấy giá trị điểm hiện tại từ EditText
             int currentPoint = Integer.parseInt(inputCurrentPoint.getText().toString());
+            int newPointStr =Integer.parseInt(inputUsePoint.getText().toString());
+            String note = inputNote.getText().toString().trim();
             int point= currentPoint-newPointStr;
             if(point<0){
                 Toast.makeText(UsePointActivity.this, "Điểm không còn đủ", Toast.LENGTH_SHORT).show();
             }else{
-            updatePointsForPhoneNumber(phone, point, note);}}
+                updatePointsForPhoneNumber(phone, point, note);
+            }
         });
 
         // Xử lý sự kiện cho nút Save & Next
         buttonSaveNext.setOnClickListener((View)-> {
 
             String phone = inputCustomerPhone.getText().toString().trim();
-            int newPointStr =Integer.parseInt(inputUsePoint.getText().toString());
-            String note = inputNote.getText().toString().trim();
+
 
             if (!isValidPhoneNumber(phone)) {
                 Toast.makeText(UsePointActivity.this, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if (inputCurrentPoint.getText().toString().isEmpty()) {
+                Toast.makeText(UsePointActivity.this, "Vui lòng ấn nút load point", Toast.LENGTH_SHORT).show();
+                return;}
             // Kiểm tra điểm nhập vào không phải là số âm, 0, hoặc chứa ký tự không hợp lệ
-            if (!isValidPoint(newPointStr)) {
-                Toast.makeText(UsePointActivity.this, "Điểm phải là số dương và không chứa ký tự đặc biệt", Toast.LENGTH_SHORT).show();
+            if (!isValidPoint(inputUsePoint.getText().toString())) {
+                Toast.makeText(UsePointActivity.this, "Điểm phải là số dương và không chứa ký tự đặc biệt,không bỏ trống", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // Kiểm tra độ dài ghi chú không vượt quá 100 ký tự
-            if (!isValidNote(note)) {
-                Toast.makeText(UsePointActivity.this, "Ghi chú không được vượt quá 100 ký tự", Toast.LENGTH_SHORT).show();
+            if (!isValidNote(inputNote.getText().toString())) {
+                Toast.makeText(UsePointActivity.this, "Ghi chú không được vượt quá 100 ký tự,không bỏ trống", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            if (inputCurrentPoint.getText().toString().isEmpty()) {
-                Toast.makeText(UsePointActivity.this, "Vui lòng ấn nút load point", Toast.LENGTH_SHORT).show();}else{
                 // Lấy giá trị điểm hiện tại từ EditText
                 int currentPoint = Integer.parseInt(inputCurrentPoint.getText().toString());
+                int newPointStr =Integer.parseInt(inputUsePoint.getText().toString());
+                String note = inputNote.getText().toString().trim();
                 int point= currentPoint-newPointStr;
                 if(point<0){
                     Toast.makeText(UsePointActivity.this, "Điểm không còn đủ", Toast.LENGTH_SHORT).show();
                 }else{
-                    updatePointsForPhoneNumber(phone, point, note);}}
+                    updatePointsForPhoneNumber(phone, point, note);
+                clearInputs();
+                }
         });
         // Thêm TextWatcher cho trường số điện thoại
         btn_load_Point.setOnClickListener((View)-> {
@@ -145,7 +150,8 @@ public class UsePointActivity extends AppCompatActivity {
 
         // Xử lý sự kiện cho nút List
         buttonList.setOnClickListener((View)-> {
-
+            Intent openCustomerListIntent = new Intent(this, ViewCustomerActivity.class);
+            startActivity(openCustomerListIntent);
         });
     }
 
@@ -205,14 +211,51 @@ public class UsePointActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isValidPoint(int point) {
-        // Điểm phải là số dương, không được là số 0 và không vượt quá kích thước của int
-        return point > 0 && point <= Integer.MAX_VALUE;
+    private boolean isValidPoint(String pointStr) {
+        // Kiểm tra nếu pointStr bị null hoặc là chuỗi rỗng
+        if (pointStr == null || pointStr.trim().isEmpty()) {
+            System.out.println("Điểm không được bỏ trống");
+            return false;
+        }
+
+        try {
+            // Chuyển chuỗi thành số nguyên
+            int point = Integer.parseInt(pointStr);
+
+            // Kiểm tra nếu point là 0 hoặc giá trị âm
+            if (point <= 0) {
+                System.out.println("Điểm không được là số 0 hoặc âm");
+                return false;
+            }
+
+            // Kiểm tra nếu point vượt quá giá trị tối đa của kiểu int
+            if (point > Integer.MAX_VALUE) {
+                System.out.println("Điểm không được vượt quá kích thước của int");
+                return false;
+            }
+
+            return true;
+
+        } catch (NumberFormatException e) {
+            // Xử lý khi point không phải là một số hợp lệ
+            System.out.println("Điểm phải là một số hợp lệ");
+            return false;
+        }
     }
 
+
+
     private boolean isValidNote(String note) {
-        // Kiểm tra xem độ dài của ghi chú không vượt quá 100 ký tự
-        return note.length() <= 100;
+        // Kiểm tra ghi chú không được bỏ trống và độ dài không vượt quá 100 ký tự
+        if (note == null || note.trim().isEmpty()) {
+            System.out.println("Ghi chú không được bỏ trống");
+            return false;
+        }
+        if (note.length() > 100) {
+            System.out.println("Ghi chú không được vượt quá 100 ký tự");
+            return false;
+        }
+        return true;
     }
     private boolean isPhoneNumberCreated(String phone){
         Uri uri=Uri.withAppendedPath(CustomerProvider.CONTENT_URI,phone);
