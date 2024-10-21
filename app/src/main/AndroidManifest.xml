@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-    <permission android:name="com.example.myapplication.permission.READ_DATA" android:protectionLevel="signature"/>
-    <permission android:name="com.example.myapplication.permission.WRITE_DATA" android:protectionLevel="signature"/>
-    <uses-permission android:name="com.example.myapplication.permission.READ_DATA"/>
-    <uses-permission android:name="com.example.myapplication.permission.WRITE_DATA"/>
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <permission
+        android:name="com.example.myapplication.permission.READ_DATA"
+        android:protectionLevel="signature" />
+    <permission
+        android:name="com.example.myapplication.permission.WRITE_DATA"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.myapplication.permission.READ_DATA" />
+    <uses-permission android:name="com.example.myapplication.permission.WRITE_DATA" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,39 +28,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-        tools:targetApi="31">
-
+        tools:targetApi="31" >
         <!-- Khai báo Login là Activity được khởi chạy đầu tiên -->
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Khai báo các Activity có sử dụng trong hệ thống để Android quản lý -->
+        </activity> <!-- Khai báo các Activity có sử dụng trong hệ thống để Android quản lý -->
+        <activity android:name=".activity.EmailActivity"></activity>
         <activity android:name=".activity.InputActivity" />
         <activity android:name=".activity.ViewCustomerActivity" />
         <activity android:name=".activity.UsePointActivity" />
 
         <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <provider
             android:name=".Provider.CustomerProvider"
             android:authorities="com.example.myapplication.provider.CustomerProvider"
             android:exported="true"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
                 android:name="android.support.MULTI_PROCESS"
-                android:value="true"/>
+                android:value="true" />
         </provider>
-
-
     </application>
 
 </manifest>

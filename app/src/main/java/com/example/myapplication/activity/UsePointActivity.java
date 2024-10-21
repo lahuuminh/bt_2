@@ -2,22 +2,29 @@ package com.example.myapplication.activity;
 
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Provider.CustomerProvider;
 import com.example.myapplication.R;
+import com.example.myapplication.model.CustomerModel;
 import com.example.myapplication.util.DBHelper;
+import com.example.myapplication.util.XmlExporter;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -26,6 +33,7 @@ public class UsePointActivity extends AppCompatActivity {
 
     private EditText inputCustomerPhone, inputCurrentPoint, inputUsePoint, inputNote;
     private Button buttonSave, buttonSaveNext, buttonInput, buttonUse, buttonList,btn_load_Point;
+    private DBHelper dbHelper = new DBHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +161,32 @@ public class UsePointActivity extends AppCompatActivity {
             Intent openCustomerListIntent = new Intent(this, ViewCustomerActivity.class);
             startActivity(openCustomerListIntent);
         });
+
+        buttonInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UsePointActivity.this);
+                builder.setTitle("Chọn hành động")
+                        .setItems(new String[]{"Import", "Export"}, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == 0) {
+                                    Toast.makeText(getApplicationContext(), "Ban da click vao Import", Toast.LENGTH_SHORT).show();
+                                } else if (which == 1) {
+                                    Toast.makeText(getApplicationContext(), "Ban da click vao Export", Toast.LENGTH_SHORT).show();
+                                    exportFile();
+                                }
+                            }
+                        })
+                        .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                builder.show();
+            }
+        });
     }
 
     // Phương thức lưu dữ liệu từ các input
@@ -274,4 +308,25 @@ public class UsePointActivity extends AppCompatActivity {
         }
         return phone.matches(regex);
     }
+
+    private void exportFile() {
+        Intent intent = null;
+        try {
+            ArrayList<CustomerModel> customers = dbHelper.getAllCustomers();
+            if (customers != null) {
+                Log.d("ExportFile", "Số lượng khách hàng: " + customers.size());
+                String filename = getExternalFilesDir(null) + "/customers.xml"; // Đảm bảo đường dẫn hợp lệ
+                XmlExporter.exportCustomersToXML(customers, filename);
+                intent = new Intent(this, EmailActivity.class);
+                intent.putExtra("filename", filename);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Danh sách khách hàng trống.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Có lỗi xảy ra khi xuất file XML: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
