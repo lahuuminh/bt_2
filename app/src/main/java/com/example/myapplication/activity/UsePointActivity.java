@@ -1,9 +1,11 @@
 package com.example.myapplication.activity;
 
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,21 +15,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.Provider.CustomerProvider;
 import com.example.myapplication.R;
 import com.example.myapplication.model.CustomerModel;
 import com.example.myapplication.util.DBHelper;
 import com.example.myapplication.util.XmlExporter;
+import com.example.myapplication.util.XmlImporter;
 
-import java.io.File;
+
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
-
 
 public class UsePointActivity extends AppCompatActivity {
 
@@ -35,11 +43,16 @@ public class UsePointActivity extends AppCompatActivity {
     private Button buttonSave, buttonSaveNext, buttonInput, buttonUse, buttonList,btn_load_Point;
     private DBHelper dbHelper = new DBHelper(this);
 
+    private static final int PERMISSION_REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usepoint); // Thay thế 'activity_main' bằng tên file layout của bạn nếu khác
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
         // Khởi tạo các view
         inputCustomerPhone = findViewById(R.id.inputCustomerPhone);
         inputCurrentPoint = findViewById(R.id.inputCurrentPoint);
@@ -172,6 +185,7 @@ public class UsePointActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 if (which == 0) {
                                     Toast.makeText(getApplicationContext(), "Ban da click vao Import", Toast.LENGTH_SHORT).show();
+                                    importFile();
                                 } else if (which == 1) {
                                     Toast.makeText(getApplicationContext(), "Ban da click vao Export", Toast.LENGTH_SHORT).show();
                                     exportFile();
@@ -329,4 +343,70 @@ public class UsePointActivity extends AppCompatActivity {
         }
     }
 
+    private void importFile() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT); // Thay ACTION_OPEN_DOCUMENT bằng ACTION_GET_CONTENT
+        intent.setType("*/*"); // Cho phép chọn tất cả các loại tệp
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, 1);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                importFile(); // Gọi hàm để mở dialog chọn file
+            } else {
+                // Quyền bị từ chối
+                Toast.makeText(this, "Cần quyền đọc bộ nhớ để nhập file", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            try {
+                importData(uri);  // Gọi hàm importData để xử lý file XML
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Lỗi khi nhập dữ liệu từ file XML", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
+    private void importData(Uri xmlUri) throws Exception {
+        // Xóa dữ liệu cũ trước khi chèn dữ liệu mới
+        int rowsDeleted = getContentResolver().delete(CustomerProvider.CONTENT_URI, null, null);
+        Log.d("ImportData", "Số bản ghi bị xóa: " + rowsDeleted);
+
+        // Đọc và chuyển đổi dữ liệu từ XML
+        InputStream inputStream = getContentResolver().openInputStream(xmlUri);
+        List<CustomerModel> customers = XmlImporter.importCustomersFromXML(inputStream);
+        System.out.println(customers.size());
+        // Chèn dữ liệu mới vào cơ sở dữ liệu thông qua ContentProvider
+        for (CustomerModel customer : customers) {
+            ContentValues values = new ContentValues();
+            values.put(DBHelper.COLUMN_PHONE_NUMBER, customer.getPhoneNumber());
+            values.put(DBHelper.COLUMN_NOTES, customer.getNote());
+            values.put(DBHelper.COLUMN_POINT, customer.getPoint());
+            values.put(DBHelper.COLUMN_TIME_CREATED, customer.getTimeCreated());
+
+            // Chèn bản ghi vào cơ sở dữ liệu
+            getContentResolver().insert(CustomerProvider.CONTENT_URI, values);
+        }
+
+        assert inputStream != null;
+        inputStream.close(); // Đóng InputStream sau khi xong
+    }
+
+
 }
+

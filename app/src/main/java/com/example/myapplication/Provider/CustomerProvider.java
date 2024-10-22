@@ -76,7 +76,32 @@ public class CustomerProvider extends ContentProvider {
     // Trả về 0 cho delete nếu không cần xóa
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsDeleted;
+
+        switch (uriMatcher.match(uri)) {
+            case CUSTOMERS:
+                // Xóa tất cả các bản ghi trong bảng customers
+                rowsDeleted = db.delete(DBHelper.TABLE_NAME, selection, selectionArgs);
+                break;
+            case CUSTOMER_ID:
+                // Xóa một bản ghi cụ thể bằng số điện thoại
+                selection = DBHelper.COLUMN_PHONE_NUMBER + " = ?";
+                selectionArgs = new String[]{uri.getLastPathSegment()};
+                rowsDeleted = db.delete(DBHelper.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+
+        // Gửi thông báo rằng dữ liệu đã thay đổi
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return rowsDeleted;
     }
+
+
 }
 

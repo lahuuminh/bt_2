@@ -14,6 +14,10 @@ public class CustomerModel {
         this.timeCreated = System.currentTimeMillis();
     }
 
+    public CustomerModel() {
+
+    }
+
     // Getters and Setters
     public String getPhoneNumber() {
         return phoneNumber;
