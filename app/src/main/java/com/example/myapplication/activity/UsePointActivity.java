@@ -50,9 +50,7 @@ public class UsePointActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usepoint); // Thay thế 'activity_main' bằng tên file layout của bạn nếu khác
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-        }
+
         // Khởi tạo các view
         inputCustomerPhone = findViewById(R.id.inputCustomerPhone);
         inputCurrentPoint = findViewById(R.id.inputCurrentPoint);
@@ -185,7 +183,7 @@ public class UsePointActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 if (which == 0) {
                                     Toast.makeText(getApplicationContext(), "Ban da click vao Import", Toast.LENGTH_SHORT).show();
-                                    importFile();
+                                    checkPermissionAndImport();
                                 } else if (which == 1) {
                                     Toast.makeText(getApplicationContext(), "Ban da click vao Export", Toast.LENGTH_SHORT).show();
                                     exportFile();
@@ -350,6 +348,13 @@ public class UsePointActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
+    private void checkPermissionAndImport() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        } else {
+            importFile(); // Gọi hàm để mở dialog chọn file nếu đã có quyền
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
