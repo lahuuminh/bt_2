@@ -41,6 +41,7 @@ public class UsePointActivity extends AppCompatActivity {
 
     private EditText inputCustomerPhone, inputCurrentPoint, inputUsePoint, inputNote;
     private Button buttonSave, buttonSaveNext, buttonInput, buttonUse, buttonList,btn_load_Point;
+    private Button btnFile;
     private DBHelper dbHelper = new DBHelper(this);
 
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -72,6 +73,7 @@ public class UsePointActivity extends AppCompatActivity {
         buttonUse = findViewById(R.id.buttonUse);
         buttonList = findViewById(R.id.buttonList);
         btn_load_Point=findViewById(R.id.button_load_point_1);
+        btnFile = findViewById(R.id.ButtonEx_ImFile);
         // Xử lý sự kiện cho nút Save
         buttonSave.setOnClickListener((View) -> {
             String phone = inputCustomerPhone.getText().toString().trim();
@@ -173,7 +175,7 @@ public class UsePointActivity extends AppCompatActivity {
             startActivity(openCustomerListIntent);
         });
 
-        buttonInput.setOnClickListener(new View.OnClickListener() {
+        btnFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(UsePointActivity.this);
