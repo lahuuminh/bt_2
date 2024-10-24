@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -344,17 +345,23 @@ public class UsePointActivity extends AppCompatActivity {
     }
 
     private void importFile() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT); // Thay ACTION_OPEN_DOCUMENT bằng ACTION_GET_CONTENT
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT); // Sử dụng ACTION_OPEN_DOCUMENT thay vì ACTION_GET_CONTENT
         intent.setType("*/*"); // Cho phép chọn tất cả các loại tệp
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, 1); // Gọi startActivityForResult để xử lý khi người dùng chọn file
     }
 
     private void checkPermissionAndImport() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Trên Android 10+ không cần yêu cầu quyền READ_EXTERNAL_STORAGE
+            importFile();
         } else {
-            importFile(); // Gọi hàm để mở dialog chọn file nếu đã có quyền
+            // Kiểm tra quyền READ_EXTERNAL_STORAGE nếu Android 9 trở xuống
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            } else {
+                importFile(); // Gọi hàm để mở dialog chọn file nếu đã có quyền
+            }
         }
     }
 
@@ -370,6 +377,7 @@ public class UsePointActivity extends AppCompatActivity {
             }
         }
     }
+
 
 
     @Override
