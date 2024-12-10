@@ -144,8 +144,6 @@ public class InputActivity extends AppCompatActivity {
 
         // Xử lý sự kiện cho nút Input
         buttonInput.setOnClickListener((View) -> {
-            Intent intent = new Intent(InputActivity.this, InputActivity.class); // Chuyển đến InputActivity
-            startActivity(intent);
         });
 
         // Xử lý sự kiện cho nút Use

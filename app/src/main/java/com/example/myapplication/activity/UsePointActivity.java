@@ -166,8 +166,6 @@ public class UsePointActivity extends AppCompatActivity {
 
         // Xử lý sự kiện cho nút Use
         buttonUse.setOnClickListener((View)-> {
-            Intent intent = new Intent(UsePointActivity.this, UsePointActivity.class); // Chuyển đến UsePointActivity
-            startActivity(intent); // Chạy activity UsePointActivity
         });
 
         // Xử lý sự kiện cho nút List
