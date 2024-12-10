@@ -149,7 +149,7 @@ public class UsePointActivity extends AppCompatActivity {
         // Thêm TextWatcher cho trường số điện thoại
         btn_load_Point.setOnClickListener((View)-> {
             String phone = inputCustomerPhone.getText().toString().trim();
-            if (!isValidPhoneNumber(phone) && !phone.isEmpty()) {
+            if (!isValidPhoneNumber(phone) || !phone.isEmpty()) {
                 Toast.makeText(UsePointActivity.this, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
             } else {
                 getPointsForPhoneNumber(phone);
